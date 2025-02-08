@@ -1,0 +1,5 @@
+streamlit
+speechrecognition
+requests
+pyaudio  # For Windows/Mac/Linux users
+sounddevice  # Alternative for systems where PyAudio fails

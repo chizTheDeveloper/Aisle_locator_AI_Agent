@@ -1,0 +1,14 @@
+{
+  "aisles": {
+    "Aisle 1": ["Fruits", "Vegetables"],
+    "Aisle 2": ["Dairy", "Eggs", "Cheese"],
+    "Aisle 3": ["Bakery", "Bread"],
+    "Aisle 4": ["Beverages", "Soft Drinks", "Juice"],
+    "Aisle 5": ["Snacks", "Chips", "Cookies"],
+    "Aisle 6": ["Meat", "Seafood"],
+    "Aisle 7": ["Frozen Foods"],
+    "Aisle 8": ["Cereal", "Grains", "Pasta"],
+    "Aisle 9": ["Canned Goods", "Soup"],
+    "Aisle 10": ["Cleaning Supplies", "Toiletries"]
+  }
+}
