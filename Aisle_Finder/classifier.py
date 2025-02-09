@@ -8,18 +8,26 @@ from dotenv import load_dotenv
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
+# Define valid grocery categories
+GROCERY_CATEGORIES = ["Fruits", "Vegetables", "Dairy", "Bakery", "Beverages",
+                      "Snacks", "Meat", "Frozen Foods", "Cereal", "Canned Goods", "Cleaning Supplies"]
+
 def classify_item(item_name):
     """Classifies an item into a category using AI."""
     if not GROQ_API_KEY:
         return "Error: Missing API Key."
 
     prompt = f"""
-    Classify the item '{item_name}' into one of these categories:
-    Fruits, Vegetables, Dairy, Bakery, Beverages, Snacks, Meat, Frozen Foods, Cereal, Canned Goods, Cleaning Supplies.
+    Classify the item '{item_name}' into one of these grocery store categories:
+    {", ".join(GROCERY_CATEGORIES)}.
+
+    **Only return the category name. Do NOT explain your reasoning.**
+    If the item is NOT found in a grocery store, return: "Item Not Found".
     
-    **Only return the category name. No extra words or formatting.**
-    Example output:
-    Vegetables
+    Example Outputs:
+    - "Vegetables" (for Carrot)
+    - "Beverages" (for Coca-Cola)
+    - "Item Not Found" (for Toyota)
     """
 
     try:
@@ -36,15 +44,15 @@ def classify_item(item_name):
         print("Groq API Response:", json.dumps(result, indent=2))  # Debugging
 
         if "choices" in result and result["choices"]:
-            # Extract raw AI response
             response_text = result["choices"][0]["message"]["content"].strip()
 
-            # Use regex to extract just the category
-            match = re.search(r"\b(Fruits|Vegetables|Dairy|Bakery|Beverages|Snacks|Meat|Frozen Foods|Cereal|Canned Goods|Cleaning Supplies)\b", response_text, re.IGNORECASE)
-            if match:
-                return match.group(1)  # Return the matched category name only
+            # Validate response
+            if response_text in GROCERY_CATEGORIES:
+                return response_text  # Valid category
+            elif "Item Not Found" in response_text:
+                return "Item Not Found"
 
-            return "Error: AI did not return a valid category."
+        return "Error: AI did not return a valid category."
 
     except requests.exceptions.RequestException as e:
         return f"Error: API request failed ({e})."
@@ -53,11 +61,14 @@ def find_aisle(item_name, aisle_data):
     """Find the aisle based on the classified category."""
     category = classify_item(item_name)
     
-    # Check if classification failed
+    if category == "Item Not Found":
+        return f"❌ '{item_name}' is not sold in a grocery store."
+
     if category.startswith("Error"):
         return category  # Return error message
 
     for aisle, categories in aisle_data["aisles"].items():
         if category in categories:
-            return f"{item_name} is in {aisle} ({category})."
-    return f"{item_name} not found."
+            return f"✅ {item_name} is in {aisle} ({category})."
+    
+    return f"❌ {item_name} not found in the database."
