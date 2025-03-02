@@ -1,7 +1,8 @@
 streamlit
 speechrecognition
 requests
-pyaudio  # For Windows/Mac/Linux users
-sounddevice  # Alternative for systems where PyAudio fails
+pyaudio==0.2.11  
+pipwin 
+sounddevice  
 numpy
 streamlit-js-eval
