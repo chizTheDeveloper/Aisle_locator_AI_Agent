@@ -1,6 +1,6 @@
 {
   "aisles": {
-    "Aisle 1 : Office Supplies": [
+    "Aisle 1 : ": [
       "Laser paper",
       "inkjet paper",
       "multi-use paper",
@@ -33,7 +33,7 @@
       "calenders & planners",
       "Agendas"
     ],
-    "Aisle 2 : Warehouse & Facilities": [
+    "Aisle 2 : ": [
       "packing tape",
       "corrugate boxes",
       "pack & ship",
@@ -61,10 +61,10 @@
       "business stationery",
       "journals",
       "envelopes",
-      "stationery & invitations",
+      "invitations",
       "T-shirt transfer/ cards"
     ],
-    "Aisle 3 : Health & Safety": [
+    "Aisle 3 : ": [
       "Travel Accessories",
       "travel luggage",
       "backpacks",
