@@ -1,4 +1,4 @@
-import sounddevice as sd
+import speech_recognition as sr
 import numpy as np
 import wave
 import tempfile
@@ -11,27 +11,22 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 # Manually set the correct microphone index
 MIC_INDEX = 2  # Change this based on your working microphone
 
-def record_audio(filename="audio.wav", duration=5, samplerate=16000):
-    """Records audio from a specific microphone and saves it as a WAV file."""
-    print(f"🎤 Listening... (Using mic index {MIC_INDEX})")
+def record_audio():
+    """Records audio from the default microphone and returns transcribed text."""
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("🎤 Listening...")
+        audio = recognizer.listen(source)
 
     try:
-        # Capture audio using the correct microphone
-        audio_data = sd.rec(int(samplerate * duration), samplerate=samplerate,
-                            channels=1, dtype=np.int16, device=MIC_INDEX)
-        sd.wait()  # Wait for recording to finish
-        print("🔊 Audio recorded successfully.")
-
-        # Save audio to a WAV file
-        with wave.open(filename, "wb") as wf:
-            wf.setnchannels(1)
-            wf.setsampwidth(2)  # 16-bit audio
-            wf.setframerate(samplerate)
-            wf.writeframes(audio_data.tobytes())
-
-        return filename
-    except Exception as e:
-        print(f"❌ Error recording audio: {e}")
+        text = recognizer.recognize_google(audio)
+        print(f"📝 Recognized text: {text}")
+        return text
+    except sr.UnknownValueError:
+        print("❌ Could not understand audio.")
+        return None
+    except sr.RequestError:
+        print("❌ Could not request results, check internet connection.")
         return None
 
 def transcribe_audio(filename):
@@ -53,12 +48,22 @@ def transcribe_audio(filename):
         return "❌ Error: Could not transcribe speech."
 
 def get_voice_input():
-    """Records audio and transcribes it using Groq's Whisper API."""
-    audio_file = record_audio()
-    if not audio_file:
-        return "❌ Audio recording failed."
+    """Records audio using speech_recognition and transcribes it using Groq's Whisper API."""
+    recognizer = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("🎤 Listening...")
+        audio = recognizer.listen(source)
 
-    text = transcribe_audio(audio_file)
-    os.remove(audio_file)  # Delete temp file
+    # Save the audio to a temporary file (needed for Whisper API)
+    temp_filename = "temp_audio.wav"
+    with open(temp_filename, "wb") as f:
+        f.write(audio.get_wav_data())
+
+    # Transcribe using Groq Whisper API
+    text = transcribe_audio(temp_filename)
+
+    # Clean up temp file
+    os.remove(temp_filename)
+
     print(f"✅ You said: {text}")
     return text
