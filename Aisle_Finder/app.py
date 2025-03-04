@@ -5,9 +5,14 @@ import os
 import json
 
 # Load aisle data
-with open("aisles.json") as f:
-    aisle_data = json.load(f)
+# Get the directory of the current script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+# Construct the absolute path to the JSON file
+json_path = os.path.join(script_dir, "aisles.json")
 
+with open(json_path) as f:
+    aisle_data = json.load(f)
+    
 # Initialize session state for user input
 if "user_input" not in st.session_state:
     st.session_state["user_input"] = ""
