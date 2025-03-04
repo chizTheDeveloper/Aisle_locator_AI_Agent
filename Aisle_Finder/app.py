@@ -62,8 +62,8 @@ if "user_input" not in st.session_state:
 col1, col2 = st.columns([1, 5])  # Adjust width ratio for better alignment
 
 # **Mic Button (Triggers Voice Input)**
-#with col1:
-    #mic_clicked = st.button("🎤", key="mic_button")
+with col1:
+    mic_clicked = st.button("🎤", key="mic_button")
 
 # **Text Input (Triggers Search on Enter)**
 with col2:
