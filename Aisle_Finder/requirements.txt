@@ -5,3 +5,4 @@ pipwin
 sounddevice  
 numpy
 streamlit-js-eval
+python-dotenv
