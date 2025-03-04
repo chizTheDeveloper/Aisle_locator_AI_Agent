@@ -1,7 +1,6 @@
 streamlit
 speechrecognition
 requests
-pyaudio==0.2.11  
 pipwin 
 sounddevice  
 numpy
