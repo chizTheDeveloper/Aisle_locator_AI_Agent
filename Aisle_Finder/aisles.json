@@ -73,7 +73,7 @@
       "drafting & design",
       "staplers",
       "presentation boards",
-      "arts + crafts",
+      "arts",
       "health & safety",
       "cleaning supplies",
       "waste supplies",
@@ -163,6 +163,9 @@
     "refrigerator",
     "alcohol",
     "drugs",
-    "vehicle"
+    "vehicle",
+    "fruits",
+    "pasteries",
+    "meat"
   ]
 }

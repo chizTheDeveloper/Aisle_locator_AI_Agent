@@ -86,4 +86,4 @@ def find_aisle(item_name, aisle_data):
         if category in categories:
             return f"{aisle} ({category})."
     
-    return f"❌ '{item_name}' is not sold at staples."
+    return f"not sold at staples."
