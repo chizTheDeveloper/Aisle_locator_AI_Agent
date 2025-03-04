@@ -4,6 +4,7 @@ import os
 import re
 from dotenv import load_dotenv
 import streamlit as st
+import json
 
 # Load API Key
 load_dotenv()
@@ -18,8 +19,13 @@ def classify_item(item_name):
     if not GROQ_API_KEY:
         return "Error: Missing API Key."
 
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the absolute path to the JSON file
+    json_path = os.path.join(script_dir, "aisles.json")
       # Load JSON file
-    with open("aisles.json", "r") as f:
+    with open(json_path) as f:
         aisle_data = json.load(f)
 
     CATEGORIES = sorted(set(item.lower() for items in aisle_data["aisles"].values() for item in items))
