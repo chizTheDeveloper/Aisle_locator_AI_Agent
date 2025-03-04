@@ -1,7 +1,13 @@
 import streamlit as st
 from speech import get_voice_input
 from classifier import find_aisle, classify_item
+import os
 import json
+
+aisle_file = "aisles.json"
+
+if not os.path.exists(aisle_file):
+    raise FileNotFoundError(f"❌ {aisle_file} not found! Make sure it is included in the deployment.")
 
 # Load aisle data
 with open("aisles.json") as f:
