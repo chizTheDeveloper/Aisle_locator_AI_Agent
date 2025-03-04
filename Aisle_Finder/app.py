@@ -5,7 +5,7 @@ import os
 import json
 
 # Load aisle data
-with open("Aisle_Finder\aisles.json", "r") as f:
+with open("aisles.json") as f:
     aisle_data = json.load(f)
 
 # Initialize session state for user input
