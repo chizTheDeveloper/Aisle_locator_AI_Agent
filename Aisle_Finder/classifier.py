@@ -8,7 +8,7 @@ import streamlit as st
 # Load API Key
 #load_dotenv()
 # Use environment variable or Streamlit secrets
-GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("groq_api_key") # Use .get() for safety
+GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY") # Use .get() for safety
 
 if not GROQ_API_KEY:
     st.error("Error: GROQ_API_KEY not found. Please set it in a .env file or Streamlit secrets.")
