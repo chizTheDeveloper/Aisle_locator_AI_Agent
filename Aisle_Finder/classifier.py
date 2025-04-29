@@ -2,11 +2,11 @@ import requests
 import json
 import os
 import re
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import streamlit as st
 
 # Load API Key
-load_dotenv()
+#load_dotenv()
 # Use environment variable or Streamlit secrets
 GROQ_API_KEY = os.getenv("GROQ_API_KEY") or st.secrets.get("groq_api_key") # Use .get() for safety
 
